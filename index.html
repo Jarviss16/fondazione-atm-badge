@@ -42,7 +42,7 @@ h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
 .form-section h2, .badge-preview h2 { font-size: 18px; margin-bottom: 18px; font-weight: 600; }
 .form-group { margin-bottom: 18px; }
 label { font-size: 14px; font-weight: 600; margin-bottom: 4px; display: block; }
-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 14px; background: #fff; }
+input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 14px; background: #fff; text-transform: uppercase; }
 
 button {
     width: 100%; max-width: 300px; margin: 10px auto 0 auto;
@@ -99,12 +99,12 @@ button {
 <header>
     <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/76a399aa-7c56-4334-ba40-12d0a5576831" alt="Fondazione ATM" style="width:200px; margin-bottom:16px;">
     <h1>Fondazione ATM Badge</h1>
-    <p class="subtitle">Inserisci i dati e genera il Badge.</p>
+    <p class="subtitle">Sistema moderno, pulito ed elegante</p>
 </header>
 
 <div class="main-content">
 <div class="form-section">
-    <h2>Registrazione Dipendente o Pensionato</h2>
+    <h2>Registrazione Dipendente</h2>
     <form id="registrationForm">
         <div class="form-group"><label>Nome</label><input type="text" id="nome" required></div>
         <div class="form-group"><label>Cognome</label><input type="text" id="cognome" required></div>
@@ -144,8 +144,11 @@ const matricola = document.getElementById("matricola");
 
 function updateBadge() {
     if (nome.value && cognome.value && email.value && matricola.value) {
-        document.getElementById("badgeName").textContent = nome.value;
-        document.getElementById("badgeSurname").textContent = cognome.value;
+        const nomeUpper = nome.value.toUpperCase();
+        const cognomeUpper = cognome.value.toUpperCase();
+
+        document.getElementById("badgeName").textContent = nomeUpper;
+        document.getElementById("badgeSurname").textContent = cognomeUpper;
         document.getElementById("badgeMatricola").textContent = matricola.value;
         document.getElementById("badgeEmail").textContent = email.value;
 
@@ -173,7 +176,7 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
     });
 
     pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-    pdf.save(`Badge_${cognome.value}_${nome.value}.pdf`);
+    pdf.save(`Badge_${cognome.value.toUpperCase()}_${nome.value.toUpperCase()}.pdf`);
 });
 </script>
 </body>
