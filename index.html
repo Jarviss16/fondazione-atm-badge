@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Fondazione ATM Badge</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             --color-primary: #FF8C00;
@@ -23,41 +24,35 @@
             background-color: var(--color-background);
             color: var(--color-text);
             padding: 20px;
-            letter-spacing: -0.3px;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: auto; }
 
         header {
             text-align: center;
             margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
         }
-
-        .logo { width: 240px; height: auto; }
 
         h1 {
             font-size: 32px;
-            margin-bottom: 10px;
-            color: var(--color-accent);
             font-weight: 700;
             letter-spacing: -1px;
         }
 
-        .subtitle { color: #888; font-size: 15px; font-weight: 400; }
+        .subtitle {
+            color: #777;
+            margin-top: 6px;
+            font-size: 15px;
+        }
 
+        /* ▬▬▬▬▬ MAIN LAYOUT ▬▬▬▬▬ */
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
         }
 
-        .form-section {
+        .form-section, .badge-preview {
             background: var(--color-surface);
             padding: 30px;
             border-radius: 16px;
@@ -65,427 +60,253 @@
             border: 1px solid var(--color-border);
         }
 
-        .form-section h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--color-accent);
-            font-weight: 600;
-        }
-
-        .form-group { margin-bottom: 20px; }
-
         label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
             font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
         }
 
         input {
             width: 100%;
             padding: 12px;
-            border: 1px solid var(--color-border);
             border-radius: 10px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.2s;
-            background-color: var(--color-background);
+            border: 1px solid var(--color-border);
+            margin-bottom: 20px;
         }
-
-        input:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.12);
-        }
-
-        .button-group { display: flex; gap: 12px; margin-top: 24px; }
 
         button {
-            flex: 1;
-            padding: 12px 24px;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
             font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: .2s;
         }
 
         .btn-primary {
             background-color: var(--color-primary);
             color: white;
-            font-weight: 600;
         }
 
         .btn-primary:hover {
             background-color: var(--color-primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.25);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .btn-secondary {
-            background-color: var(--color-surface);
-            color: var(--color-accent);
-            border: 1.5px solid var(--color-accent);
-            font-weight: 600;
+            background-color: white;
+            border: 2px solid var(--color-accent);
         }
 
-        .btn-secondary:hover { background-color: var(--color-background); }
-
-        .badge-preview {
-            background: var(--color-surface);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid var(--color-border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .badge-preview h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--color-accent);
-            font-weight: 600;
-        }
-
-        .badge-container { width: 100%; max-width: 300px; }
-
-        /* --- BADGE CORRETTO --- */
+        /* ▬▬▬▬▬ BADGE STYLE (CORRETTO 100%) ▬▬▬▬▬ */
         #badge {
             width: 100%;
-            background: linear-gradient(135deg, #FF8C00 0%, #FF7500 100%);
-            color: #FFFFFF; /* TESTO BIANCO */
+            background: #FF7A00 !important;
+            background-image: linear-gradient(135deg, #FF8C00, #FF7500) !important;
             padding: 40px 30px;
-            border-radius: 22px; /* PIÙ TONDO E PULITO */
+            border-radius: 26px !important;
             text-align: center;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-            font-family: inherit;
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            color: #FFFFFF !important;
+            border: none !important;
+            outline: none !important;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            border: none; /* RIMOSSO IL BORDO DIFETTOSO */
+            gap: 16px;
         }
 
-        /* TUTTO IL TESTO DEL BADGE BIANCO */
-        .badge-company,
-        .badge-name,
-        .badge-surname,
-        .badge-info,
-        .badge-label,
-        .badge-value,
-        .badge-footer p {
+        /* TESTO SEMPRE BIANCO (anche nel PDF) */
+        #badge * {
             color: #FFFFFF !important;
+            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
         }
-
-        .badge-qr {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 4px;
-            border-radius: 10px;
-        }
-
-        .badge-qr img { width: 100%; height: 100%; display: block; }
-
-        .badge-logo { width: 60px; height: auto; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; }
 
         .badge-company {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 2px;
-            margin-bottom: 12px;
-            opacity: 1;
             text-transform: uppercase;
-            position: relative;
-            z-index: 1;
         }
-
-        .badge-header {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge-icon { font-size: 40px; margin-bottom: 15px; position: relative; z-index: 1; }
 
         .badge-name {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
         }
 
         .badge-surname {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 10px;
         }
 
-        .badge-divider { display: none; }
-
-        .badge-info {
-            font-size: 13px;
-            line-height: 1.6;
-            opacity: 1;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            text-align: center;
-        }
-
-        .badge-label {
-            opacity: 1;
-            font-size: 9px;
+        .badge-info .badge-label {
+            font-size: 10px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin: 0;
-            font-weight: 600;
+            opacity: 0.9;
         }
 
-        .badge-value {
-            font-weight: 700;
-            margin-bottom: 12px;
+        .badge-info .badge-value {
             font-size: 14px;
+            font-weight: 700;
         }
-
-        .badge-footer { margin-top: 20px; padding-top: 0; border-top: none; position: relative; z-index: 1; }
 
         .badge-footer p {
-            font-size: 10px;
-            opacity: 1;
-            margin: 0;
-            line-height: 1.4;
-            font-weight: 500;
+            font-size: 11px;
+            opacity: 0.9;
         }
 
-        .empty-state { color: #999; text-align: center; padding: 40px 20px; }
-
-        .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
 
         .download-btn {
-            width: 100%;
             margin-top: 20px;
-            background-color: var(--color-accent);
+            background-color: #000;
             color: white;
-            font-weight: 600;
         }
 
-        .download-btn:hover {
-            background-color: #333333;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
+        .download-btn:hover { background-color: #333; }
 
-        .download-btn:disabled {
-            background-color: #999;
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .success-message {
-            display: none;
-            background-color: #d4edda;
-            color: #155724;
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
-        }
-
-        .success-message.show { display: block; animation: slideIn 0.3s ease-out; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .main-content { grid-template-columns: 1fr; }
-            h1 { font-size: 24px; }
-            .form-section, .badge-preview { padding: 20px; }
-        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/76a399aa-7c56-4334-ba40-12d0a5576831" alt="Fondazione ATM" class="logo">
-            <div>
-                <h1>Fondazione ATM Badge</h1>
-                <p class="subtitle">Registra i dipendenti e scarica il badge digitale in PDF</p>
+<div class="container">
+
+    <header>
+        <h1>Fondazione ATM Badge</h1>
+        <p class="subtitle">Registra i dipendenti e scarica il badge digitale</p>
+    </header>
+
+    <div class="main-content">
+
+        <!-- FORM -->
+        <div class="form-section">
+            <h2>Registrazione Dipendente</h2>
+
+            <form id="registrationForm">
+                <label>Nome</label>
+                <input type="text" id="nome" required>
+
+                <label>Cognome</label>
+                <input type="text" id="cognome" required>
+
+                <label>Email</label>
+                <input type="email" id="email" required>
+
+                <label>Matricola</label>
+                <input type="text" id="matricola" required>
+
+                <button class="btn-primary" type="submit">Genera Badge</button>
+                <button class="btn-secondary" type="reset">Cancella</button>
+            </form>
+        </div>
+
+        <!-- ANTEPRIMA -->
+        <div class="badge-preview">
+            <h2>Anteprima Badge</h2>
+
+            <div id="emptyState" class="empty-state">
+                📋 Compila il modulo per visualizzare il badge
             </div>
-        </header>
 
-        <div class="main-content">
-            <!-- FORM REGISTRAZIONE -->
-            <div class="form-section">
-                <h2>Registrazione Dipendente</h2>
-                <form id="registrationForm">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" placeholder="Es. Marco" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cognome">Cognome</label>
-                        <input type="text" id="cognome" placeholder="Es. Rossi" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="marco.rossi@azienda.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="matricola">Matricola</label>
-                        <input type="text" id="matricola" placeholder="Es. EMP-001" required>
-                    </div>
-                    <div class="button-group">
-                        <button type="submit" class="btn-primary">Genera Badge</button>
-                        <button type="reset" class="btn-secondary">Cancella</button>
-                    </div>
-                </form>
-            </div>
+            <div id="badgeContainer" style="display:none;">
+                <div id="badge">
+                    <div class="badge-company">Fondazione ATM</div>
+                    <div class="badge-name" id="badgeName"></div>
+                    <div class="badge-surname" id="badgeSurname"></div>
 
-            <!-- ANTEPRIMA BADGE -->
-            <div class="badge-preview">
-                <h2>Anteprima Badge</h2>
-
-                <div id="emptyState" class="empty-state">
-                    <div class="empty-state-icon">📋</div>
-                    <p>Compila il modulo per visualizzare il badge</p>
-                </div>
-
-                <div id="badgeContainer" class="badge-container" style="display: none;">
-                    <div id="badge">
-                        <div class="badge-company">Fondazione ATM</div>
-                        <div class="badge-name" id="badgeName"></div>
-                        <div class="badge-surname" id="badgeSurname"></div>
-                        <div class="badge-info">
-                            <div>
-                                <div class="badge-label">Matricola</div>
-                                <div class="badge-value" id="badgeMatricola"></div>
-                            </div>
-                            <div>
-                                <div class="badge-label">Email</div>
-                                <div class="badge-value" id="badgeEmail"></div>
-                            </div>
+                    <div class="badge-info">
+                        <div>
+                            <div class="badge-label">Matricola</div>
+                            <div class="badge-value" id="badgeMatricola"></div>
                         </div>
-                        <div class="badge-footer">
-                            <p>Beneficiario iscritto a Fondazione ATM.</p>
+
+                        <div>
+                            <div class="badge-label">Email</div>
+                            <div class="badge-value" id="badgeEmail"></div>
                         </div>
                     </div>
 
-                    <button type="button" class="btn-primary download-btn" id="downloadBtn">
-                        📥 Scarica Badge PDF
-                    </button>
+                    <div class="badge-footer">
+                        <p>Beneficiario iscritto a Fondazione ATM.</p>
+                    </div>
                 </div>
+
+                <button id="downloadBtn" class="download-btn">📥 Scarica Badge PDF</button>
             </div>
+
         </div>
     </div>
+</div>
 
-    <script>
-        const form = document.getElementById('registrationForm');
-        const nome = document.getElementById('nome');
-        const cognome = document.getElementById('cognome');
-        const email = document.getElementById('email');
-        const matricola = document.getElementById('matricola');
 
-        const emptyState = document.getElementById('emptyState');
-        const badgeContainer = document.getElementById('badgeContainer');
-        const badge = document.getElementById('badge');
-        const downloadBtn = document.getElementById('downloadBtn');
+<script>
+/* INPUT */
+const form = document.getElementById("registrationForm");
+const nome = document.getElementById("nome");
+const cognome = document.getElementById("cognome");
+const email = document.getElementById("email");
+const matricola = document.getElementById("matricola");
 
-        // Aggiorna il badge in tempo reale
-        function updateBadge() {
-            if (nome.value && cognome.value && email.value && matricola.value) {
-                document.getElementById('badgeName').textContent = nome.value;
-                document.getElementById('badgeSurname').textContent = cognome.value;
-                document.getElementById('badgeMatricola').textContent = matricola.value;
-                document.getElementById('badgeEmail').textContent = email.value;
+const badgeContainer = document.getElementById("badgeContainer");
+const emptyState = document.getElementById("emptyState");
 
-                emptyState.style.display = 'none';
-                badgeContainer.style.display = 'flex';
-            } else {
-                emptyState.style.display = 'block';
-                badgeContainer.style.display = 'none';
-            }
+/* UPDATE BADGE */
+function updateBadge() {
+    if (nome.value && cognome.value && email.value && matricola.value) {
+        document.getElementById("badgeName").textContent = nome.value;
+        document.getElementById("badgeSurname").textContent = cognome.value;
+        document.getElementById("badgeMatricola").textContent = matricola.value;
+        document.getElementById("badgeEmail").textContent = email.value;
+
+        emptyState.style.display = "none";
+        badgeContainer.style.display = "block";
+    } else {
+        emptyState.style.display = "block";
+        badgeContainer.style.display = "none";
+    }
+}
+
+[nome, cognome, email, matricola].forEach(el => {
+    el.addEventListener("input", updateBadge);
+});
+
+/* FORM SUBMIT */
+form.addEventListener("submit", e => {
+    e.preventDefault();
+    updateBadge();
+});
+
+/* PDF DOWNLOAD */
+document.getElementById("downloadBtn").addEventListener("click", () => {
+    const element = document.getElementById("badge");
+
+    const opt = {
+        margin: 10,
+        filename: `Badge_${cognome.value}_${nome.value}.pdf`,
+        image: { type: "png", quality: 1 },
+        html2canvas: {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: null,
+            removeContainer: true
+        },
+        jsPDF: {
+            unit: "mm",
+            format: [85, 140],
+            orientation: "portrait"
         }
+    };
 
-        // Event listener per aggiornamento in tempo reale
-        [nome, cognome, email, matricola].forEach(field => {
-            field.addEventListener('input', updateBadge);
-        });
+    html2pdf().set(opt).from(element).save();
+});
+</script>
 
-        // Gestisci il submit del form
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            updateBadge();
-        });
-
-        // Download badge in PDF
-        downloadBtn.addEventListener('click', async () => {
-            try {
-                downloadBtn.disabled = true;
-                const originalText = downloadBtn.textContent;
-                downloadBtn.textContent = '⏳ Generazione in corso...';
-
-                const element = badge;
-
-                const opt = {
-                    margin: [10, 10, 10, 10],
-                    filename: `Badge_${cognome.value}_${nome.value}.pdf`,
-                    image: { type: 'png', quality: 0.98 },
-                    html2canvas: {
-                        scale: 2,
-                        useCORS: true,
-                        logging: false,
-                        backgroundColor: null, // RIMOSSO LO SFONDO ARANCIONE ESTERNO
-                        allowTaint: true,
-                        foreignObjectRendering: false
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: [85, 140],
-                        orientation: 'portrait'
-                    },
-                    pagebreak: { mode: 'avoid' }
-                };
-
-                // Genera e scarica il PDF
-                await html2pdf().set(opt).from(element).save();
-
-                downloadBtn.disabled = false;
-                downloadBtn.textContent = originalText;
-            } catch (error) {
-                console.error('Errore:', error);
-                downloadBtn.disabled = false;
-                downloadBtn.textContent = '❌ Errore - Riprova';
-                setTimeout(() => {
-                    downloadBtn.textContent = '📥 Scarica Badge PDF';
-                }, 3000);
-            }
-        });
-    </script>
 </body>
 </html>
