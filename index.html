@@ -45,14 +45,12 @@
             color: #666;
         }
 
-        /* ---- Layout ---- */
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
 
-        /* ---- Form ---- */
         .form-section, .badge-preview {
             background: var(--surface);
             padding: 32px;
@@ -113,7 +111,7 @@
         #badge {
             width: 100%;
             background-image: linear-gradient(135deg, #FF8C00, #FF7000);
-            padding: 40px 32px; /* ridotto padding verticale per eliminare bianco */
+            padding: 20px 32px; /* padding ottimizzato */
             border-radius: 28px;
             text-align: center;
             color: white;
@@ -174,7 +172,6 @@
             opacity: .9;
         }
 
-        /* ---- Empty state ---- */
         .empty-state {
             padding: 60px 20px;
             color: #888;
@@ -204,7 +201,6 @@
 
     <div class="main-content">
 
-        <!-- FORM -->
         <div class="form-section">
             <h2>Registrazione Dipendente</h2>
 
@@ -234,7 +230,6 @@
             </form>
         </div>
 
-        <!-- ANTEPRIMA -->
         <div class="badge-preview">
             <h2>Anteprima Badge</h2>
 
@@ -275,7 +270,6 @@
 </div>
 
 <script>
-/* INPUT */
 const nome = document.getElementById("nome");
 const cognome = document.getElementById("cognome");
 const email = document.getElementById("email");
@@ -302,11 +296,10 @@ document.getElementById("registrationForm").addEventListener("submit", e => {
     e.preventDefault(); updateBadge();
 });
 
-/* PDF */
 document.getElementById("downloadBtn").addEventListener("click", () => {
     const badge = document.getElementById("badge");
 
-    const widthMM = badge.offsetWidth * 0.264583;  // px -> mm
+    const widthMM = badge.offsetWidth * 0.264583;
     const heightMM = badge.offsetHeight * 0.264583;
 
     const opt = {
@@ -315,7 +308,7 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
         image: { type: "png", quality: 1 },
         html2canvas: {
             scale: 4,
-            backgroundColor: null,
+            backgroundColor: "#FF8C00", // stesso colore gradient iniziale
             useCORS: true,
             scrollY: -window.scrollY
         },
