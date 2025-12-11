@@ -513,36 +513,38 @@
                 downloadBtn.disabled = true;
                 downloadBtn.textContent = '⏳ Generazione in corso...';
                 
-                // Attendi un po' per assicurare il rendering
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
                 const element = badge;
+                
                 const opt = {
-                    margin: [15, 15, 15, 15],
+                    margin: [10, 10, 10, 10],
                     filename: `Badge_${cognome.value}_${nome.value}.pdf`,
-                    image: { type: 'png', quality: 0.98, compression: 'NONE' },
+                    image: { type: 'png', quality: 0.98 },
                     html2canvas: { 
-                        scale: 2, 
-                        useCORS: true, 
+                        scale: 2,
+                        useCORS: true,
                         logging: false,
                         backgroundColor: '#FF8C00',
-                        windowHeight: 800,
-                        windowWidth: 600,
-                        allowTaint: true
+                        allowTaint: true,
+                        foreignObjectRendering: false
                     },
                     jsPDF: { 
-                        unit: 'mm', 
-                        format: [100, 160], 
-                        orientation: 'portrait',
-                        compress: true
+                        unit: 'mm',
+                        format: [85, 140],
+                        orientation: 'portrait'
                     },
                     pagebreak: { mode: 'avoid' }
                 };
 
-                await html2pdf().set(opt).from(element).save();
-                
-                downloadBtn.disabled = false;
-                downloadBtn.textContent = '📥 Scarica Badge PDF';
+                html2pdf().set(opt).from(element).save().then(() => {
+                    downloadBtn.disabled = false;
+                    downloadBtn.textContent = '📥 Scarica Badge PDF';
+                }).catch(() => {
+                    downloadBtn.disabled = false;
+                    downloadBtn.textContent = '❌ Errore - Riprova';
+                    setTimeout(() => {
+                        downloadBtn.textContent = '📥 Scarica Badge PDF';
+                    }, 3000);
+                });
             } catch (error) {
                 console.error('Errore:', error);
                 downloadBtn.disabled = false;
