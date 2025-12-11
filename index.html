@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Badge Creator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fondazione ATM Badge</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
@@ -16,11 +16,7 @@
             --color-accent: #000000;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -30,10 +26,7 @@
             letter-spacing: -0.3px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
         header {
             text-align: center;
@@ -45,10 +38,7 @@
             gap: 20px;
         }
 
-        .logo {
-            width: 240px;
-            height: auto;
-        }
+        .logo { width: 240px; height: auto; }
 
         h1 {
             font-size: 32px;
@@ -58,11 +48,7 @@
             letter-spacing: -1px;
         }
 
-        .subtitle {
-            color: #888;
-            font-size: 15px;
-            font-weight: 400;
-        }
+        .subtitle { color: #888; font-size: 15px; font-weight: 400; }
 
         .main-content {
             display: grid;
@@ -86,9 +72,7 @@
             font-weight: 600;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 20px; }
 
         label {
             display: block;
@@ -114,11 +98,7 @@
             box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.12);
         }
 
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
+        .button-group { display: flex; gap: 12px; margin-top: 24px; }
 
         button {
             flex: 1;
@@ -156,9 +136,7 @@
             font-weight: 600;
         }
 
-        .btn-secondary:hover {
-            background-color: var(--color-background);
-        }
+        .btn-secondary:hover { background-color: var(--color-background); }
 
         .badge-preview {
             background: var(--color-surface);
@@ -179,49 +157,48 @@
             font-weight: 600;
         }
 
-        .badge-container {
-            width: 100%;
-            max-width: 300px;
-        }
+        .badge-container { width: 100%; max-width: 300px; }
 
+        /* --- BADGE CORRETTO --- */
         #badge {
             width: 100%;
             background: linear-gradient(135deg, #FF8C00 0%, #FF7500 100%);
-            color: #000000;
+            color: #FFFFFF; /* TESTO BIANCO */
             padding: 40px 30px;
-            border-radius: 12px;
+            border-radius: 22px; /* PIÙ TONDO E PULITO */
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
             font-family: inherit;
             position: relative;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            border: none; /* RIMOSSO IL BORDO DIFETTOSO */
         }
-        
+
+        /* TUTTO IL TESTO DEL BADGE BIANCO */
+        .badge-company,
+        .badge-name,
+        .badge-surname,
+        .badge-info,
+        .badge-label,
+        .badge-value,
+        .badge-footer p {
+            color: #FFFFFF !important;
+        }
+
         .badge-qr {
             width: 70px;
             height: 70px;
             margin: 0 auto;
             background-color: white;
             padding: 4px;
-            border-radius: 6px;
-        }
-        
-        .badge-qr img {
-            width: 100%;
-            height: 100%;
-            display: block;
+            border-radius: 10px;
         }
 
-        .badge-logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 12px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .badge-qr img { width: 100%; height: 100%; display: block; }
+
+        .badge-logo { width: 60px; height: auto; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; }
 
         .badge-company {
             font-size: 12px;
@@ -232,7 +209,6 @@
             text-transform: uppercase;
             position: relative;
             z-index: 1;
-            color: #000000;
         }
 
         .badge-header {
@@ -245,12 +221,7 @@
             z-index: 1;
         }
 
-        .badge-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
+        .badge-icon { font-size: 40px; margin-bottom: 15px; position: relative; z-index: 1; }
 
         .badge-name {
             font-size: 28px;
@@ -259,7 +230,6 @@
             letter-spacing: -0.5px;
             position: relative;
             z-index: 1;
-            color: #000000;
         }
 
         .badge-surname {
@@ -269,12 +239,9 @@
             letter-spacing: -0.5px;
             position: relative;
             z-index: 1;
-            color: #000000;
         }
 
-        .badge-divider {
-            display: none;
-        }
+        .badge-divider { display: none; }
 
         .badge-info {
             font-size: 13px;
@@ -286,7 +253,6 @@
             flex-direction: column;
             gap: 12px;
             text-align: center;
-            color: #000000;
         }
 
         .badge-label {
@@ -296,23 +262,15 @@
             letter-spacing: 1.5px;
             margin: 0;
             font-weight: 600;
-            color: #000000;
         }
 
         .badge-value {
             font-weight: 700;
             margin-bottom: 12px;
             font-size: 14px;
-            color: #000000;
         }
 
-        .badge-footer {
-            margin-top: 20px;
-            padding-top: 0;
-            border-top: none;
-            position: relative;
-            z-index: 1;
-        }
+        .badge-footer { margin-top: 20px; padding-top: 0; border-top: none; position: relative; z-index: 1; }
 
         .badge-footer p {
             font-size: 10px;
@@ -320,20 +278,11 @@
             margin: 0;
             line-height: 1.4;
             font-weight: 500;
-            color: #000000;
         }
 
-        .empty-state {
-            color: #999;
-            text-align: center;
-            padding: 40px 20px;
-        }
+        .empty-state { color: #999; text-align: center; padding: 40px 20px; }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
+        .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
 
         .download-btn {
             width: 100%;
@@ -366,34 +315,17 @@
             border: 1px solid #c3e6cb;
         }
 
-        .success-message.show {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
+        .success-message.show { display: block; animation: slideIn 0.3s ease-out; }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .form-section, .badge-preview {
-                padding: 20px;
-            }
+            .main-content { grid-template-columns: 1fr; }
+            h1 { font-size: 24px; }
+            .form-section, .badge-preview { padding: 20px; }
         }
     </style>
 </head>
@@ -438,10 +370,13 @@
             <!-- ANTEPRIMA BADGE -->
             <div class="badge-preview">
                 <h2>Anteprima Badge</h2>
+
                 <div id="emptyState" class="empty-state">
                     <div class="empty-state-icon">📋</div>
                     <p>Compila il modulo per visualizzare il badge</p>
-                </div>                    <div id="badgeContainer" class="badge-container" style="display: none;">
+                </div>
+
+                <div id="badgeContainer" class="badge-container" style="display: none;">
                     <div id="badge">
                         <div class="badge-company">Fondazione ATM</div>
                         <div class="badge-name" id="badgeName"></div>
@@ -460,6 +395,7 @@
                             <p>Beneficiario iscritto a Fondazione ATM.</p>
                         </div>
                     </div>
+
                     <button type="button" class="btn-primary download-btn" id="downloadBtn">
                         📥 Scarica Badge PDF
                     </button>
@@ -474,7 +410,7 @@
         const cognome = document.getElementById('cognome');
         const email = document.getElementById('email');
         const matricola = document.getElementById('matricola');
-        
+
         const emptyState = document.getElementById('emptyState');
         const badgeContainer = document.getElementById('badgeContainer');
         const badge = document.getElementById('badge');
@@ -487,7 +423,7 @@
                 document.getElementById('badgeSurname').textContent = cognome.value;
                 document.getElementById('badgeMatricola').textContent = matricola.value;
                 document.getElementById('badgeEmail').textContent = email.value;
-                
+
                 emptyState.style.display = 'none';
                 badgeContainer.style.display = 'flex';
             } else {
@@ -511,23 +447,24 @@
         downloadBtn.addEventListener('click', async () => {
             try {
                 downloadBtn.disabled = true;
+                const originalText = downloadBtn.textContent;
                 downloadBtn.textContent = '⏳ Generazione in corso...';
-                
+
                 const element = badge;
-                
+
                 const opt = {
                     margin: [10, 10, 10, 10],
                     filename: `Badge_${cognome.value}_${nome.value}.pdf`,
                     image: { type: 'png', quality: 0.98 },
-                    html2canvas: { 
+                    html2canvas: {
                         scale: 2,
                         useCORS: true,
                         logging: false,
-                        backgroundColor: '#FF8C00',
+                        backgroundColor: null, // RIMOSSO LO SFONDO ARANCIONE ESTERNO
                         allowTaint: true,
                         foreignObjectRendering: false
                     },
-                    jsPDF: { 
+                    jsPDF: {
                         unit: 'mm',
                         format: [85, 140],
                         orientation: 'portrait'
@@ -535,16 +472,11 @@
                     pagebreak: { mode: 'avoid' }
                 };
 
-                html2pdf().set(opt).from(element).save().then(() => {
-                    downloadBtn.disabled = false;
-                    downloadBtn.textContent = '📥 Scarica Badge PDF';
-                }).catch(() => {
-                    downloadBtn.disabled = false;
-                    downloadBtn.textContent = '❌ Errore - Riprova';
-                    setTimeout(() => {
-                        downloadBtn.textContent = '📥 Scarica Badge PDF';
-                    }, 3000);
-                });
+                // Genera e scarica il PDF
+                await html2pdf().set(opt).from(element).save();
+
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = originalText;
             } catch (error) {
                 console.error('Errore:', error);
                 downloadBtn.disabled = false;
