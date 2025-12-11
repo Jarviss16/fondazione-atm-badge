@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Fondazione ATM – Creazione Badge</title>
+<title>Fondazione ATM – Badge</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -39,7 +39,7 @@ h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
     border: 1px solid var(--border);
 }
 
-.form-section h2, .-preview h2 { font-size: 18px; margin-bottom: 18px; font-weight: 600; }
+.form-section h2, .badge-preview h2 { font-size: 18px; margin-bottom: 18px; font-weight: 600; }
 .form-group { margin-bottom: 18px; }
 label { font-size: 14px; font-weight: 600; margin-bottom: 4px; display: block; }
 input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 14px; background: #fff; text-transform: uppercase; }
@@ -55,7 +55,7 @@ button {
 .btn-primary:hover { background: var(--primary-dark); }
 .btn-secondary { background: white; border: 2px solid #000; }
 
-# {
+#badge {
     width: 100%;
     max-width: 350px;
     margin: 0 auto;
@@ -70,14 +70,14 @@ button {
     box-shadow: 0 6px 20px rgba(0,0,0,0.20);
 }
 
-# * { color: #fff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+#badge * { color: #fff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-.-company { text-transform: uppercase; letter-spacing: 2px; font-size: 13px; opacity: .95; }
-.-name { font-size: 28px; font-weight: 700; letter-spacing: -0.6px; }
-.-surname { margin-top: -8px; font-size: 26px; font-weight: 600; }
-.-info { display: flex; flex-direction: column; gap: 16px; font-size: 14px; }
-.-label { font-size: 11px; opacity: .85; text-transform: uppercase; letter-spacing: 1px; }
-.-value { font-size: 15px; font-weight: 700; margin-top: 2px; }
+.badge-company { text-transform: uppercase; letter-spacing: 2px; font-size: 13px; opacity: .95; }
+.badge-name { font-size: 28px; font-weight: 700; letter-spacing: -0.6px; }
+.badge-surname { margin-top: -8px; font-size: 26px; font-weight: 600; }
+.badge-info { display: flex; flex-direction: column; gap: 16px; font-size: 14px; }
+.badge-label { font-size: 11px; opacity: .85; text-transform: uppercase; letter-spacing: 1px; }
+.badge-value { font-size: 15px; font-weight: 700; margin-top: 2px; }
 .badge-footer { margin-top: 8px; font-size: 11px; opacity: .9; }
 
 .empty-state { padding: 40px 10px; color: #888; text-align: center; font-size: 14px; }
