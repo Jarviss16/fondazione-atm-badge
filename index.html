@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Badge Creator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --color-primary: #FF8C00;
+            --color-primary-hover: #E67E00;
+            --color-background: #FFFFFF;
+            --color-surface: #FAFAFA;
+            --color-text: #1a1a1a;
+            --color-border: #F0F0F0;
+            --color-accent: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            padding: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 240px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--color-accent);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background: var(--color-surface);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--color-border);
+        }
+
+        .form-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background-color: var(--color-background);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.12);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.25);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--color-surface);
+            color: var(--color-accent);
+            border: 1.5px solid var(--color-accent);
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-background);
+        }
+
+        .badge-preview {
+            background: var(--color-surface);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge-preview h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .badge-container {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #badge {
+            width: 100%;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FF7500 100%),
+                        url('https://chart.googleapis.com/chart?chs=200x200&chd=D&cht=qr&chl=https://www.fondazioneatm.it/it/index.html');
+            background-size: cover, 80px 80px;
+            background-position: center, bottom right;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            font-family: inherit;
+            position: relative;
+        }
+
+        .badge-logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 12px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .badge-company {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+
+        .badge-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .badge-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .badge-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .badge-surname {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .badge-divider {
+            height: 1px;
+            background-color: rgba(255,255,255,0.3);
+            margin: 15px 0;
+        }
+
+        .badge-info {
+            font-size: 12px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .badge-label {
+            opacity: 0.8;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .badge-value {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .badge-footer {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .badge-footer p {
+            font-size: 9px;
+            opacity: 0.8;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .empty-state {
+            color: #999;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .download-btn {
+            width: 100%;
+            margin-top: 20px;
+            background-color: var(--color-accent);
+            color: white;
+            font-weight: 600;
+        }
+
+        .download-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:disabled {
+            background-color: #999;
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-section, .badge-preview {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/76a399aa-7c56-4334-ba40-12d0a5576831" alt="Fondazione ATM" class="logo">
+            <div>
+                <h1>Fondazione ATM Badge</h1>
+                <p class="subtitle">Registra i dipendenti e scarica il badge digitale in PDF</p>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- FORM REGISTRAZIONE -->
+            <div class="form-section">
+                <h2>Registrazione Dipendente</h2>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" placeholder="Es. Marco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cognome">Cognome</label>
+                        <input type="text" id="cognome" placeholder="Es. Rossi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="marco.rossi@azienda.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="matricola">Matricola</label>
+                        <input type="text" id="matricola" placeholder="Es. EMP-001" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Genera Badge</button>
+                        <button type="reset" class="btn-secondary">Cancella</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ANTEPRIMA BADGE -->
+            <div class="badge-preview">
+                <h2>Anteprima Badge</h2>
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>Compila il modulo per visualizzare il badge</p>
+                </div>                    <div id="badgeContainer" class="badge-container" style="display: none;">
+                    <div id="badge">
+                        <div class="badge-company">Fondazione ATM</div>
+                        <div class="badge-name" id="badgeName"></div>
+                        <div class="badge-surname" id="badgeSurname"></div>
+                        <div class="badge-divider"></div>
+                        <div class="badge-info">
+                            <div class="badge-label">Matricola</div>
+                            <div class="badge-value" id="badgeMatricola"></div>
+                            <div class="badge-label">Email</div>
+                            <div class="badge-value" id="badgeEmail"></div>
+                        </div>
+                        <div class="badge-footer">
+                            <p>Beneficiario iscritto a Fondazione ATM.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary download-btn" id="downloadBtn">
+                        📥 Scarica Badge PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const nome = document.getElementById('nome');
+        const cognome = document.getElementById('cognome');
+        const email = document.getElementById('email');
+        const matricola = document.getElementById('matricola');
+        
+        const emptyState = document.getElementById('emptyState');
+        const badgeContainer = document.getElementById('badgeContainer');
+        const badge = document.getElementById('badge');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Aggiorna il badge in tempo reale
+        function updateBadge() {
+            if (nome.value && cognome.value && email.value && matricola.value) {
+                document.getElementById('badgeName').textContent = nome.value;
+                document.getElementById('badgeSurname').textContent = cognome.value;
+                document.getElementById('badgeMatricola').textContent = matricola.value;
+                document.getElementById('badgeEmail').textContent = email.value;
+                
+                emptyState.style.display = 'none';
+                badgeContainer.style.display = 'flex';
+            } else {
+                emptyState.style.display = 'block';
+                badgeContainer.style.display = 'none';
+            }
+        }
+
+        // Event listener per aggiornamento in tempo reale
+        [nome, cognome, email, matricola].forEach(field => {
+            field.addEventListener('input', updateBadge);
+        });
+
+        // Gestisci il submit del form
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            updateBadge();
+        });
+
+        // Download badge in PDF
+        downloadBtn.addEventListener('click', () => {
+            const element = badge;
+            const opt = {
+                margin: 10,
+                filename: `Badge_${cognome.value}_${nome.value}.pdf`,
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: [] }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+</body>
+</html>
