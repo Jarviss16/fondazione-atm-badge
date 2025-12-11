@@ -113,7 +113,7 @@
         #badge {
             width: 100%;
             background-image: linear-gradient(135deg, #FF8C00, #FF7000);
-            padding: 50px 32px; /* padding aumentato per sicurezza */
+            padding: 40px 32px; /* ridotto padding verticale per eliminare bianco */
             border-radius: 28px;
             text-align: center;
             color: white;
@@ -306,18 +306,22 @@ document.getElementById("registrationForm").addEventListener("submit", e => {
 document.getElementById("downloadBtn").addEventListener("click", () => {
     const badge = document.getElementById("badge");
 
+    const widthMM = badge.offsetWidth * 0.264583;  // px -> mm
+    const heightMM = badge.offsetHeight * 0.264583;
+
     const opt = {
-        margin: 0, // zero margine per evitare tagli
+        margin: 0,
         filename: `Badge_${cognome.value}_${nome.value}.pdf`,
         image: { type: "png", quality: 1 },
         html2canvas: {
-            scale: 4, // alta qualità
+            scale: 4,
             backgroundColor: null,
             useCORS: true,
+            scrollY: -window.scrollY
         },
         jsPDF: {
             unit: "mm",
-            format: [105, 190], // leggermente più grande per sicurezza
+            format: [widthMM, heightMM],
             orientation: "portrait"
         }
     };
